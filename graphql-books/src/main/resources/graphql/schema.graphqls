@@ -1,0 +1,15 @@
+#Root operation type
+type Query{
+    allEmpleados: [Empleado]
+    findOne(id: ID!): Empleado
+    allEmpleadosPage(page:Int, size: Int): [Empleado]
+}
+
+#Object type
+type Empleado{
+    id: ID!
+    nombre: String
+    email: String
+    telefono: String
+    salario: Float
+}
