@@ -1,17 +1,20 @@
 package com.gaspar.jdbc.clientdemo.service;
 
 import com.gaspar.jdbc.clientdemo.entity.Producto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProductoServiceJdbcClient implements ProductoService{
-
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final JdbcClient jdbcClient;
 
     public ProductoServiceJdbcClient(JdbcClient jdbcClient) {
@@ -44,7 +47,7 @@ public class ProductoServiceJdbcClient implements ProductoService{
                     .param("pre",producto.precio())
                     .update(keyHolder);
         }catch (Exception e){
-            System.out.println(e);
+            logger.info(e.toString());
         }
 
         Integer keyAs = keyHolder.getKeyAs(Integer.class);
@@ -53,11 +56,19 @@ public class ProductoServiceJdbcClient implements ProductoService{
 
     @Override
     public void update(Producto producto, Integer id) {
-
+        int update = jdbcClient
+                .sql("UPDATE producto SET descripcion=?, precio=? WHERE id_producto=?")
+                .params(List.of(producto.descripcion(), producto.precio(), id))
+                .update();
+        Assert.state(update==1,"Fail to update "+id);
     }
 
     @Override
     public void delete(Integer id) {
-
+        int update = jdbcClient
+                .sql("DELETE FROM producto WHERE id_producto=:id")
+                .param("id",id)
+                .update();
+        Assert.state(update==1,"Fail to delete "+id);
     }
 }

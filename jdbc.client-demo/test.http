@@ -1,18 +1,37 @@
-#### mailchimp
-GET https://mandrillapp.com/api/1.0/messages/send
+#### find all
+GET http://localhost:8080/api/producto/all
+
+
+
+#### find by id
+GET http://localhost:8080/api/producto/1
+
+
+
+##### insertar nuevo produco
+POST http://localhost:8080/api/producto
 Content-Type: application/json
 
 {
-     "key": "IaE4NaOxBID7VRqoqYpUYg",
-     "message": {
-          "from_email": "hello@paywithzippy.com",
-          "subject": "Test de nuevo correo",
-          "text": "You",
-          "to": [
-               {
-                    "email": "nestor01@yopmail.com",
-                    "type": "to"
-               }
-        ]
-     }
+     "descripcion":"xxssx",
+     "precio":10.50
 }
+
+
+
+##### actualizar produco
+PUT http://localhost:8080/api/producto/1
+Content-Type: application/json
+
+{
+     "descripcion":"Agua",
+     "precio":10.50
+}
+
+
+
+
+##### actualizar produco
+DELETE  http://localhost:8080/api/producto/1
+Content-Type: application/json
+
