@@ -31,8 +31,8 @@ public class ProductoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    void create(@RequestBody Producto producto){
-        productoService.create(producto);
+    Optional<Producto>  create(@RequestBody Producto producto){
+        return productoService.create(producto);
     }
 
     @PutMapping("/{id}")

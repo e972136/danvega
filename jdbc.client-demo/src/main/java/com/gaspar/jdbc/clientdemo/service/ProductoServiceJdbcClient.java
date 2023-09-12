@@ -2,6 +2,8 @@ package com.gaspar.jdbc.clientdemo.service;
 
 import com.gaspar.jdbc.clientdemo.entity.Producto;
 import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,8 +35,20 @@ public class ProductoServiceJdbcClient implements ProductoService{
     }
 
     @Override
-    public void create(Producto producto) {
+    public Optional<Producto> create(Producto producto) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        try{
+            jdbcClient
+                    .sql("INSERT INTO producto(descripcion, precio) VALUES(:des,:pre) returning id_producto")
+                    .param("des",producto.descripcion())
+                    .param("pre",producto.precio())
+                    .update(keyHolder);
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
+        Integer keyAs = keyHolder.getKeyAs(Integer.class);
+        return findById(keyAs);
     }
 
     @Override

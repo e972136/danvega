@@ -1,0 +1,18 @@
+#### mailchimp
+GET https://mandrillapp.com/api/1.0/messages/send
+Content-Type: application/json
+
+{
+     "key": "IaE4NaOxBID7VRqoqYpUYg",
+     "message": {
+          "from_email": "hello@paywithzippy.com",
+          "subject": "Test de nuevo correo",
+          "text": "You",
+          "to": [
+               {
+                    "email": "nestor01@yopmail.com",
+                    "type": "to"
+               }
+        ]
+     }
+}
